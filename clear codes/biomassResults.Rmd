@@ -1,0 +1,47 @@
+---
+title: "Food webs simplifications based on biomass"
+author: "Piotr Szefer"
+date: "31 May 2017"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, echo=FALSE)
+```
+
+```{r, message=FALSE, echo=FALSE}
+# Datasets
+source("C:/Users/szefe/Desktop/Work/extrapolation/clear codes/data_processing_biomass.R")
+# Function for the simplifications
+source("C:/Users/szefe/Desktop/Work/extrapolation/clear codes/reduceBiomass.R")
+# Reduce biomass randomly and get the reduction sequences based on biomass.
+s020 <- reduceBiomass(yPlantBio, dec.point.acc = 0, randomization = 20)
+```
+
+```{r, echo=FALSE,message=FALSE}
+#Morris, R. J., Lewis, O. T. and Godfray, H. C. J. (2004) Experimental evidence for apparent competition in a tropical forest food web. Nature 428, 310–313
+matplot(s020[[2]], type = "l")
+```
+
+```{r, , echo=FALSE,message=FALSE}
+# Get the reduction results for the network descriptors
+SpNo <- reduceFW(yIntMat, sequences = s020)
+Vuln <- reduceFW(yIntMat, sequences = s020, index = "vulnerability")
+
+biomass <- s020[[2]]
+
+Ind <- makeIndices(20)
+
+insectRich <- SpNo[,Ind]
+insectVuln <- Vuln[,Ind]
+
+par(mfrow=c(1,2))
+
+matplot(biomass, insectRich, type = "l", main="Number of insect species")
+abline(v = sum(yPlantBio)/2)
+matplot(biomass, insectVuln, type = "l", main="Average number of Herbivores per plant")
+abline(v = sum(yPlantBio)/2)
+```
+
+```{r, fig.width=20, fig.height=8}
+bipartite::plotweb(yIntMat)
+```

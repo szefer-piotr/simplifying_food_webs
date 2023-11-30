@@ -1,0 +1,197 @@
+---
+title: "Dominant species of insects in tropical rainforest food webs"
+author: "Piotr Szefer, Tom Fayle, Yves Basset, Jan Hrcek, Scott E. Miller, George D. Weiblen and Vojtech Novotny"
+date: "Last updated: `r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+## Abstract.
+
+The trivial aspects of the networks covary with essential aspects of the network,
+such as species abundance distributions (
+
+Bluthgen et al. 2008; What do interaction network metrics tell us about specialization and biological traits?
+
+Vázquez et al. 2012; The strength of plantpollinator interactions
+
+Canard etal. 2014 Empirical evaluation of neutral interactions in host-parasite networks
+
+network dimensions and sampling intensity 
+
+Martinez et al. 1999; Effects of sampling effort on characterization of food-web structure
+
+Banašek-Richter et al. 2004; Sampling effects and the robustness of quantitative and qualitative food-web descriptors
+
+Chaco et al. 2012). Evaluating sampling completeness in a desert plant-pollinator network
+
+Approach:
+
+Dominance of insects in tropical forest food webs, their consequences for the food web structure.
+
+1. Show how the network properties of our tropical food webs are changing with different reduction schemes and compare it to the ones that are already known. What is known about the: relationship between the degree distribution and the specialisation.
+
+1b. I can look at the chaaracteristics of these species. How can I connect these dominant species and randomised simplifications? What is the purpose of these? If I know that 50% of individuals is concentrated in 8 species, thatn what different schemes of simplification can teach us? Remember that the matrix is build based only on one type of nodes (for example entries in the host parasitoid matrix are parasite individuals) Maybe I can combine it with the herbivore data? I would have parsites and Yawan dataset and Wanang datasets for caterpillars. 
+
+2. Describe the charcteristics of these hubs before the reduction and after different reduction schemes.
+3. Hopefully these hubs will preserve majority of the structural properties of the entire food web. Or maybe more? And are constant throughout the time and space.
+4. How the plant dominance translates to connectivness in the plant herbivore network?
+
+## Introduction
+
+Plant-insect food webs in tropical rainforests are extraordinarily complex. A single plant-insect herbivore food web in a lowland tropical rainforest may comprise 50,000 distinct trophic interactions between ~200 plant and ~9,600 herbivore species (Novotny et al. 2010), supporting also an unknown number of host-parasitoid and prey-predator interactions. These food web dimensions were extrapolated from direct evidence for only 15% of the hypothesized trophic interactions, obtained by intense sampling over >10 years (Lewinsohn 2010). A similar attempt at a comprehensive census of plant-caterpillar food webs from tropical forests has been similarly long-lasting, and incomplete (Janzen et al. 2009). 
+
+The future analysis of complex tropical food webs may attempt even more detailed surveys, scaling up the sampling effort and using more efficient, particularly molecular, methods of detection for species and interactions (Janzen et al. 2005, 2009, Ji et al. 2013, Hrcek et al. 2013). Alternately, it may focus on incomplete food webs comprising only a subset of more abundant species and interactions, more amendable to study. This approach would be feasible only if tropical food webs could be simplified in a way that retained their key structural and functional properties. 
+
+*Whether this is true or not in a face of extrordinary complexity of food webs would require future study of model ecosystems. (What do we know about the food web strucure and its effect on the ecosystem processes Functional properties  energy flow, ecosystem services We dont know anything about it!!!. It is known that type and strength of interactions drives the community stability (Allesina and Tang 2012, Allesina 2015 Predicting the stability...). How ecosystem services can be approximated by the most abundant species?.*
+
+*It is largely unknown how the food webs affects the ecosystem function). Structural properties: nested, degree distribution follows truncated power law?*
+
+*What is the temporal dynamics of the tropical food webs?*
+
+*Can it be said that the majority of network function is preserved thanks to the hubs in the network? The best connected species?*
+
+Half of all trees in the Amazonian forest may belong to as few as 227 hyperdominant species, while the other half to the remaining ~16,000 tree species (ter Steege et al. 2013). In African rainforests, the total above-ground biomass can be predicted from a few large trees as 1.5% of tree species accounted for over 50% of the above-ground biomass (Bastin et al. 2015). The single most abundant species comprised on average 48% of all individuals in caterpillar communities on individual tree species in lowland New Guinean rainforest (Novotny et al. 2002), and these dominants showed little geographical variation within 500 x 150 km area (Novotny et al. 2006). These plant and insect dominance patters combined could permit a radical simplification of plant-insect food webs in tropical forests, to species-poor subsets of complex food webs retaining a large fraction of plant and insect individuals. 
+
+Tropical plant and insect communities are well known for large numbers of rare species, often represented as singletons in community samples and poorly studied for their role in tropical food webs (Novotny & Basset 2000, xx). We suggest that it may be equally useful to focus on the other end of the abundance spectrum and examine to what extent we could reduce the complex tropical food webs to their subsets retaining a large proportion of individuals concentrated in a small subset of the most abundant species.
+
+Dominance structure of tropical insects. Suprisingly low number of species is making up to 50% of individuals in a community. Variation in insects abundance is significant.
+
+## Methods
+
+Bipartite food webs map trophic interactions among individuals from resource (host, prey) and consumer (predator, parasitoid) species. They can be simplified by the removal of individuals or entire species from either resource or consumer trophic levels, or by the removal of trophic interactions between individuals or species from the two trophic levels. The removal of a host parasitoid trophic interaction would remove also the parasitoid, but not the host, individual from the system because each parasitoid has exactly one host individual. The same is true for herbivore individuals in our data set since we only consider the plant species they were feeding on when sampled. In all cases, the removal may be random, or ordered, starting from the rarest, or the most abundant, species or interaction (Fig. 1). Different removal modes of individuals, species or interactions could simulate various ecological and sampling processes. For instance, random removal of individuals simulates reduced sampling effort, while ordered removal of species assumes higher probability of local extinction for rare species. 
+
+We explore the consequences of reducing the number of herbivore individuals to 50% of the original total for the number of species and trophic interactions present in the food web $\sum n_s < \frac{N}{2}$. The 50% value is arbitrary, chosen to exemplify a substantial reduction of the original food webs. 
+
+In case of temporal data, we can explore how number of species making up to 50% of abundance/interactions changes with time, looking at the robustness of the most connected hubs on the food webs (part of food web that is robust in time and in case of spatial data also in space).
+
+Food web simplification is tested using four tropical data sets (detailed in Supplementary Information and Table S1): (i) Parasitoids: a caterpillar  parasitoid food web obtained by rearing parasitoids from all free-feeding and semi-concealed caterpillars feeding on the foliage of xx plant species in a New Guinea lowland rainforest (Hrcek et al. 2013); (ii) Folivores: a plant  insect folivore food web obtained by sampling (from a fixed (1500 m2) leaf area per plant species) herbivores from five guilds (mobile chewers, exposed and semi-concealed larval chewers, miners, and mesophyll suckers) from 38 plant species representing 14 families in a New Guinea lowland rainforest (Novotny et al. 2012), (iii) Caterpillars (spatial): a plant caterpillar food web comprising exposed and semi-concealed species from two Ficus, one Syzygium and one Macaranga tree species at each of the eight study sites forming a regular 500 x 150 km grid in a lowland New Guinea rainforest (Novotny et al. 2006), and (iv) Herbivores (temporal): assemblages from four herbivore taxa: Arctiidae, Geometridae, Pyraloidea, and Flatidae, sampled by light-trapping at four-month intervals over five years in a lowland forest at Barro Colorado (Panama) (Y. Basset, unpubl. data). These data sets were used to explore the variability of insect food webs on different trophic levels, among guilds with various degree of host specialization, and on different spatial and temporal scales. The five folivorous guilds span from highly specialized but species poor mesophyll suckers and miners through intermediate exposed and semi-concealed chewers to largely generalist and species rich mobile chewers (Novotny et al. 2012).
+
+Bipartite plant-herbivore and host-parasitoid food webs analyzed here were represented as matrices with rows representing resource/host (lower level species), and columns the consumer/parasitoid species (upper level species). Matrix elements consisted of the number of observed interactions between lower and upper level species (see Bascompte description of bipartite food web). Depending on the chosen strategy (one of the two levels of species or interactions) one step of the simplification process consisted of either  removing upper level species, lower level species, individual or interaction and calculating desired statistics. In case of randomised removal this process was repeated 100 times and average values at each step calculated. Increasing the number of randomised removals didn't change the quality of the results. 
+
+At each simplification step main food web descriptors were calculated based on the reduced food-web. In our analysis we chose the network level of specialisation (H2), network vulnerability and generality (Dormann et al. 2009). Vulnerability is expressed as mean effective number (weighted by margin totals) of upper level species (rows) per lower level (columns) (eg. number of redators per prey) that interacts in a food web. Generality is a mean number of lower level species per upper level species (eg. mean number of prey per predator or plant species per herbivore species). At each simplification step we also reported number of upper level species, lower level species and number of interactions making up 50% of total abundance. All network descriptors were obtained using bipartite R package (Dorman 2008).
+
+To extrapolate the number of herbivore species making up to 50% of abundance to 227 plant species we used a non-asymptotic power function fitted to the 28 terminal data points (excluding first 10 observations, arbitrarily). 
+
+## Results 
+
+### Subsets characterisitcs
+
+Preserving 50% of individuals belonging to the most abundant species showed that they belonged to a small fraction of the species pool (2 - 16%). These were included in 4-16% of all quantitave interactions, connecting them to 7-31.5% of the lower level species.
+
+What rarefaction tells us about the structure?
+
+There were 12 species (15.7% of the whole food web) parasitoid species making up 50% of individuals in the samaple, which were connected through 26 (check, 14.5%) interactions to 25 (20.6 % hosts) herbivore species. Which gives connectivity of p = 26/300 = 0.087. If we were to randomly reduce the number of species in the community to preserve 50% individuals we would preserve 80% of herbivores, 50% of parasitoids and 50% of interactions. 
+
+The random removal of individual parasitoid species from caterpillar parasitoid food web leads to the loss of parasitoid species following the rarefaction function (Fig. 3A, REF). This loss was relatively slow, as the food web with 50% of parasitoid individuals retained 80% of herbivore species. Similar pattern of slow species loss was observed for rarefaction curve for random removal of individual host caterpillars (Fig. 3B). The loss of distinct trophic interactions between a host and a parasitoid species in response to random removal of parasitoids was faster, since there was more trophic interactions than species, but even there the removal of 50% of parasitoids interacting individuals retained >50% of interactions (Fig. 3C). 
+
+The random removal of entire parasitoid or host species produced a linear relationships between the proportion of individuals and species retained. The ordered removal of parasitoid and host species, from the rarest to the most common, led to a rapid decrease in the proportion of species and trophic interactions retained in the food web (Fig. 3). For instance, the removal of merely 10% of species led to the loss of xx48, xx42 and xx50% of parasitoid species, host species and trophic interactions from the web. The 50% of individuals in the web was represented by respectively xx9.9, 10xx and 8xx% of parasitoid species, host species, and trophic interactions. The subsets of the parasitoid food webs comprising 50% of parasitoid and host individuals as a result of ordered removal of species is shown in Fig. 2. 
+
+What are these dominant species and how they compare with the rest? 
+These species are "MICR014" "MICR038" "TACH220" "TACH050" "TACH025" "MICR001" "TACH014" "ICHN004", "TACH040" "TACH032" "TACH226" "AGAT075"
+
+The food web simplification by random removal of individuals and ordered removal of species was sensitive to host specificity and species richness of the three folivore guilds (Fig. 4). Species poor miners retained higher number of species than speciose mobile chewers at 50% random removal of individuals (Fig. 4A), but lost species relatively rapidly for both random and ordered removal of host plant species (Fig. 4C, E). Values for 50% ordered removal of plant, herbivore species and trophic interactions xxx. 
+
+What are these dominant species and how they compare with the rest? Specialization and incidence.
+Miners "MINE086"  "MINE035b" "MINE166"  "MINE019"  "MINE035c" "MINE035d" "MINE103", "MINE066"  "MINE006x" "MINE042"
+Mobile "CURC012" "CHRY002" "CURC010" "CURC002" "ACRI001"
+Semi "TORT005" "TORT111" "TORT040" "GEOM001" "TORT110" "CRAM041" "CRAM002" "XXXX095", "XXXX068"
+
+The ordered removal of species resulted in [description of trends in generality, vulnerability and H2 diversity, Fig 5]
+
+Network level of specialisation and its behaviour depends on the general specialisation of the network building blocks (species). Generally for a random removal of species (hosts and herbivores) rapid increase in value of specialization index can be observed when a specific treshold is reached (for mobile chewers around 20% of individuals left in community compared to the original dataset. For highly specialized communities H2 index simply slowly, linearly approaches full specialization. For ordered removals two qualitatively different patterns are observed. For generalist communities removing rare herbivores with unique connections results in decreasing specialization until highly connected generalist start to be removed, which causes rapid increase in specialization. Highly specialized communities show slow and constant increase in specialization. Similar pattern can be also observed when plants are removed from the network instead of herbivores with the difference in generalist network that decrease in specialization comes later and ordered removals follow generally the randomized removals (Fig 5 D). Loss of interactions however displays different patterns, where specialization increases more steadily for both random and ordered removal. Ordered removals are increasing faster. 
+Generality basically follows the network levels of specializations (H2) being a measurements of a number of plants per herbivore. It is not affected by rare species and decreases slowly until network hubs (abundant generalist species) start to be removed. (Fig. 5  B) This pattern is not as visible for more specialized networks like semiconcealed chewers and miners and in these cases generality stays at the same level as approximately all species have the same number of host plants. In case of ordered removals rare species of mobile chewers were responsible for the smaller values of generality own to their low number of interactions with plants. Generality peaks around 50% of all arthropod individuals, when only highly connected generalist species are still preserved in the network. Those peaks are present also in specialized networks, however they are less distinct and occur later, at lower remaining abundance. As expected, generality decreases linearly with plants being removed from the network, and the slope depends on the community specialization (Fig 5 E). Similar pattern is observed for removal of interactions..
+Vulnerability for generalist herbivores decreases nearly linearly with random species removal, and shows rapid decrease with loss of less connected (rare species) and slows down when more abundant species started to be removed from the community. Clear qualitative change can be observed for mobile chewers (generalists) whenever 50% of individuals line is crossed. The pattern is similar for less specialized networks, and the difference between random and ordered removal seems to decrease.  Vulnerability doesnt change when plants are removed randomly from the community. It increases however, when ordered removal leaves few plants hosting majority of herbivores (Fig 5 E). For interactions the patterns in vulnerability are similar to those for arthropods removals.
+
+Genereality and vulnerability are robust measurments. Vulnerability decreases linearly can be predicted?
+
+The accumulation of herbivore species with increasing number of plant species sampled can be described, and extrapolated, by a power function (Fig. 6A, Novotny et al. 2004, 2010). The minimum number of species representing 50% of all herbivore individuals followed different trends with increasing plant diversity in individual guilds, from a linear increase in specialized guilds such as miners to decrease in the most generalist guild where fewer herbivore species were required for 50% of individuals on 38 plant species than on 10 plant species. The function for all folivores could be approximated by a power function for all folivores (Fig. 6B). A long-range, tentative extrapolation from the 38 plant species studied to 227 plant species, i.e. the number of hyperdominants found in the Amazon, suggested that from the total of xx folivorous insects feeding on 227 plant species, xx species would be needed to comprise 50% of all herbivore individuals. 
+
+The number of species representing 50% of all caterpillars in a plant caterpillar food web remained constant with increasing spatial extent of the analysis, up to eight sites within a 150 x 500 km area (Fig. 7). Likewise, the number of species required for 50% of individuals did not increase over time, from a single survey to 20 surveys over five years (Fig. 8). 
+
+## Discussion
+
+in contrast to random removal of parasitoid species that results in linear loss of species with individuals. The ordered removal of parasitoid species from the least to the most abundant species led to the simplified parasitoid assemblage where retaining 50% of individuals was possible with only 10% of the original number of species (Fig. 2). Similarly, 50% of host individuals could be represented by 10% of host species, and 50% of parasitoid individuals was retained by top 10% of the most frequent trophic interactions (Fig. 2). 
+
+The random removal of plant species number of herbivore species 
+
+Food webs have been simplified mostly to explore the consequences of species extinctions on the structural properties of food webs, including co-extinctions along trophic cascades (Albert et al. 2000, Burgos et al 2007,...). We are exploring the consequences of simplification to inform the methods of sampling and analysis of tropical food webs, almost impossible to document in their entirety. This focus has been inspired by a recent discovery by ter Steege et al. (20134) that 50% of individual trees in the Amazon belong to only 227 super-abundant from the total of 16,000 species. We are exploring whether similar simplification, retaining a large proportion of individuals while reducing the number of species, also applies to insect communities and plant-insect food webs in tropical forests. 
+
+Food web stability by deletion has already been studied by Pimm 1979 using simulation and Paine et al. (1992) using experimental approaches. Random networks with exponential degree are very fragile. Scale free networks (probability of encountering a node of degree k  = P(k) = k-gamma) are very robust to the random nodes deletion. Few highly connected nodes acts as a backbone. If hubs (highly connected nodes) were switched off, then the network gets fragmented very easily. Most of the ecological networks are scale free, therefore tere are fragile to generalists removal. Mutualistic networks are very robust to any extinction owing their properties to ordered, nested structure and truncated power law distribution of connections. 
+Dissapearence of a specific food plant or connection, doesnt necessarily mean a deactivation of a node. Arthropods can probably switch to different plants (Kaiser-Bunbury et al 2010, Kondoh 2003). Check the stability criterrion for decreasing complexity of a food web someone did that? What would be the measure of stability? Are there proofs for switching food plants in nature rewiring food webs? The secondary extinction than is slower than linear or linear. Phylogenetic information? 
+
+The analysed food webs are far from nested and are implying different responces to the species extinctions. 
+
+Analyses performed here are similar to topological stability simulations. The comprehensive review can be found in Albert and Barabasi (2002). We were not hovewer interested in the threshold for the network failure, but rather we wanted to show, how network statistics can be approximated by its simplified version containing specified fraction of individuals/connections. 
+Null models???
+Random removal of herbivore individuals from our food webs simulate smaller sampling effort on the focal plant species, while removal of rare species from the data explores the consequences of deliberately minimizing the number of species and interactions analyzed while retaining a prescribed proportion of individuals, 50% of the total in our example. Alternately, this approach can also simulate density-dependent extinction of species in local food webs.
+
+Our results illustrate large potential for simplification of complex tropical webs since 50% of all herbivore individuals and interactions involved only xx xx % of herbivore species. 
+
+Assuming that the insect patterns 
+ 
+se approaches are illustrated using a food web comprising caterpillars and their parasitoids from a lowland rainforest of New Guinea (Fig. 1). The random removal of individual caterpillars or parasitoids leads to the decrease in the number of species in the food web that can be calculated by rarefraction function (Fig. 2a, b). The random removal of individual-to-individual interactions is identical to removal of parasitoid individual in this food web, because each parasitoid is involved in exactly one interaction. This may not be the case in other webs, including for instance herbivores or predators. The random removal of host or parasitoid species leads to a different function for the loss of species with loss of individuals.
+
+Non-random loss of species or interactions, from the rarest or commonest ones, can be used to examine food web sensitivity to rare or common species and interactions. The loss of rare species may be real, due to extinction, or artificial, due to small sampling effort. 
+
+plant and herbivore individuals, or by the removal of (iv) plant or (v) herbivore species, or (vi) interactions between plant and herbivore species. The removal can be random, or progress from the least, or most abundant species or interactions. The random removal of individuals corresponds to rarefraction 
+
+is random removal by individuals = by species? probably no 
+
+In the latter case, the removal can be random, or ordered, starting from the rarest (or commonest) species or interactions.  
+
+The abundance of species and frequency of trophic interactions are the first clues to their importance; the concept of keystone species is. But the role of rare species in networks is not yet understood BIODIVERSITY AND ECOSYSTEM FUNCTION
+
+Not all of these interactions are equal in frequency or importance. The study of such analysis of complex food webs simplification of food webs have been characterized by two opposite approaches: focus on particularly rare species and interactions, 
+
+Plan-insects food webs in tropical rainforest are so complex that they are virtually impossible to census, even for modern ecology (Novotny & Miller 2014). While woody plants in rainforest communities have been mapped reasonably well by several large-scale plot networks (Anderson-Teixeira et al. 2014, ter Steege xxx, Borneo ref. xxx), the local diversity of rainforest insects have only been extrapolated, not sampled (Basset et al. 2012). 
+
+The dimension of a local plant-herbivore food web was estimated at 50,000 plant-insect interactions between 200 plant and 9,600 insect species, based on 15% of these interactions documented over many years of research (Novotny et al. 2010). Other studies point to similar level of complexity in plant-pollinator and insect-parasitoid food webs (ref). 
+
+The study of tropical food webs will benefit from more detailed resolution of food webs, obtained using more efficient molecular methods to detect trophic interactions, applied to larger samples (ref). However, given the extreme complexity of tropical food webs, we should also explore an alternative approach, focusing on a minority of the most salient interactions in the web, more accessible to study.  
+
+Food web simplification has resigned on species resolution, using the concept of trophic species(ref). This is blind alley of food web research since trophic species are not units responding to natural selection. 
+
+Studies exploring robustness of food webs usually simulate random extinction of species and its effects on the loss of other species, and interactions, in food webs (e.g., Pocock et al. 2012). Our approach is similar, exploring the effects of exclusion of the rarest species or interactions on food webs.  
+
+There are numerous theoretical, and some empirical, studies modeling the effects of species extinction or removal on the structure of food webs (xx). These are more in line of our approach. For the removal to be practically useful, it needs to be based on the species or interaction abundance. This should largely preserve the main functional properties on food webs, except for keystone species, defined as more important than corresponds to their abundance. Also, abundant species are likely to be different from rare specie the some biological traits that make them abundant, but these are poorly studied (Novotny & Basset 2000). Another problem with ignoring rare species and links arises when these are variable in space or time. 
+
+Virtually all analyses of food webs are already simplified, as they are based on incomplete samples missing rare species and trophic interactions. Further, host specificity analyses routinely exclude singletons, and sometimes also rare species with larger sample size, where host specificity cannot be reliably estimated. 
+
+A recent study showed that half of all individual trees in the Amazon may recruit from only xxx super-abundant species, a fraction of the total Amazon diversity of 16,000 tree species (ter Steege et al. xxx). This is an intriguing example of radical simplification of complex vegetation. The present paper explores whether we could achieve similarly radical simplification in insect communities and plant-insect food webs, using data from Papua New Guinea. 
+
+## Notes:
+
+We have used the following data sets:
+Three folivorous guilds were used for the analysis: mobile chewers (adult Coleoptera, adult and larval Orthoptera and Phasmatodea), semi-concealed larval chewers (leaf-tying and rolling larvae, Lepidoptera and Coleoptera), and miners (Lepidoptera, Coleoptera, Diptera). These three guilds were selected as they use the same resources but vary in host specificity, from generalist mobile chewers through intermediate semi-concealed chewers to specialized miners. 
+
+[what about extrapolation include additional guilds as they were used]
+
+2. Plant-herbivore food webs from eight study sites within 150 x 500 km of continuous lowland rainforest in New Guinea (Novotny et al. 2006). xxx. This data set was used to explore spatial variability in food webs. 
+
+3. Insect communities surveyed for xx years at the Barro Colorado Island (Basset et al. xx and unpublished). 
+This data set was used to explore temporal variability in insect communities. 
+
+The food webs we used for the analysis are not resolved to individual level for plants, since herbivores from multiple conspecific plants are combined. Further, they do not reflect differences in plant abundance since the sampling effort was kept constant for all plant species. It should be noted that the data sets used for food web and community simplification are themselves simplified representations of the real food webs as these have not been sampled completely (Novotny et al. 2010). 
+
+In the guild datasets I have arranged all the tables so that plants (38) were in rows and arthropods were in columns. Parasites dataset was arranged that caterpillar hosts were in rows and parasites were in colums. In this case vulnerability gives us average number of food plants/hosts per arthropod/parasite species and generality gives us average number of arthropods/parasites feeding on a plant species/arthropod. This arrangement by definition will not affect H2 values (in transposed matrix generality becomes vulnerability and vice versa but sometimes reducing tranposed matrix could give results which are not in accordance to the prediction and intuition).
+In some situations I was not reducing the web to one or two last rows/columns because it was difficult for the function to calculate the web parameters for such small matrices.
+[I think there was some confusion in R docuentation for the function bipartite where they mixed vulnerability and generality definitions]  
+
+host specificity with continuing food web simplification: base on local and global estimates foe each species, i.e. using host range from total sample size, and host range estimated for each subset. 
+
+miners in 1 ha: use the variable plant abundance (done), plus also densities for each miner species, modeling thus equal plant abundance. 
+
+
+parasitoids: Fig. 2A full web, ordered by parasitoid spp, different colours for 50% of parasitoids retained, 2B web retaining 50% of hosts shown, 2C 50% of interactions
+
+herbivores: Fig. 3 response in herb spp for various removals for 3 guilds finished
+
+parasitoids and herbivores: Fig. 4 generality, vulnerability, H2 diversity (maybe more) responding to random and ordered removals
+
+plant diversity prediction: Fig 5 - folivorous guilds combined and extrapolated to 227 super-abundant host spp, possibly caterpillars also separately
+
+spatial variation: Fig. 5 plant spp and caterpillars, total spp and % needed for 50% abundance (ordered removal) for 1 8 sites surveyed
+
+temporal variation: Fig 6 Yves data, total spp and % needed for 50% abundance (ordered removal) with increasing no of surveys
+
+table 1: % of spp for 50% for various data sets

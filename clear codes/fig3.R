@@ -1,6 +1,6 @@
 # Parasites
 
-setwd("C:\\Users\\Piotr Szefer\\Desktop\\Work\\extrapolation\\datasets")
+setwd("D:\\PRACA\\R\\how simple are tropical food webs\\tritrophic data")
 equal <- read.csv("ufwEqual.csv", header = TRUE, sep = "\t")
 equal[is.na(equal)] <- 0
 set.seed(2)
@@ -160,52 +160,6 @@ rarefy.interactions <- function(dataset, n = 100){
   return(result)
 }
 
-# Multiple plot function
-#
-# ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
-# - cols:   Number of columns in layout
-# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
-#
-# If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
-# then plot 1 will go in the upper left, 2 will go in the upper right, and
-# 3 will go all the way across the bottom.
-#
-multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-  require(grid)
-  
-  # Make a list from the ... arguments and plotlist
-  plots <- c(list(...), plotlist)
-  
-  numPlots = length(plots)
-  
-  # If layout is NULL, then use 'cols' to determine layout
-  if (is.null(layout)) {
-    # Make the panel
-    # ncol: Number of columns of plots
-    # nrow: Number of rows needed, calculated from # of cols
-    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                     ncol = cols, nrow = ceiling(numPlots/cols))
-  }
-  
-  if (numPlots==1) {
-    print(plots[[1]])
-    
-  } else {
-    # Set up the page
-    grid.newpage()
-    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
-    
-    # Make each plot, in the correct location
-    for (i in 1:numPlots) {
-      # Get the i,j matrix positions of the regions that contain this subplot
-      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
-      
-      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
-                                      layout.pos.col = matchidx$col))
-    }
-  }
-}
-
 # Parasites individual based rarefaction
 par.rarefied <- rarefaction(par.eq, standarise = T)
 
@@ -235,36 +189,68 @@ int.group.rar[,1] <- int.group.rar[,1]/int.group.rar[1,1]
 int.group.rar[,2] <- int.group.rar[,2]/int.group.rar[1,2]
 int.nonrandom <- reduce.interactions(ordCl) #was herb.all
 
-#Save the simplification results
-setwd("C:\\Users\\Piotr Szefer\\Desktop\\Work\\extrapolation\\datasets")
-write.table(par.rarefied, "par.rarefied.txt")
-write.table(par.sp.rar, "par.sp.rar.txt")
-write.table(par.sp.nonrand, "par.sp.nonrand.txt")
-
-write.table(host.rarefied, "host.rarefied.txt")
-write.table(host.sp.rar, "host.sp.rar.txt")
-write.table(host.sp.nonrand, "host.sp.nonrand.txt")
-
-write.table(int.rarefied, "int.rarefied.txt")
-write.table(int.group.rar, "int.group.rar.txt")
-write.table(int.nonrandom, "int.nonrandom.txt")
-
-setwd("C:\\Users\\Piotr Szefer\\Desktop\\Work\\extrapolation\\datasets")
-par.rarefied   <- read.table("par.rarefied.txt")
-par.sp.rar     <- read.table("par.sp.rar.txt")
-par.sp.nonrand <- read.table("par.sp.nonrand.txt")
-
-host.rarefied  <- read.table("host.rarefied.txt")
-host.sp.rar    <- read.table("host.sp.rar.txt")
-host.sp.nonrand<- read.table("host.sp.nonrand.txt")
-
-int.rarefied   <- read.table("int.rarefied.txt")
-int.group.rar  <- read.table("int.group.rar.txt")
-int.nonrandom  <- read.table("int.nonrandom.txt")
+windows(400,400)
+par(mfrow = c(2,2))
+plot(par.rarefied, 
+     xlim = c(0,1), ylim = c(0,1), type = "l",
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 1, lty = 1)  
+par(new = TRUE)
+plot(par.sp.rar[,1]~par.sp.rar[,2],type = "l",
+     xlim = c(0,1), ylim = c(0,1),
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 1, lty = 2)
+par(new = TRUE)
+plot(par.sp.nonrand,
+     xlim = c(0,1), ylim = c(0,1),type = "l",
+     axes = TRUE, ylab = "Fraction of parasites species", xlab = "Fraction of parasites individuals",
+     lwd = 2, lty = 1)
+text(0, 0.95, "A")
+abline(v=0.5, lty=2, col=rgb(150,0,0,75,maxColorValue=255))
+#HOSTS plot
+plot(host.rarefied, 
+     xlim = c(0,1), ylim = c(0,1), type = "l",
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 1, lty = 1)  
+par(new = TRUE)
+plot(host.sp.rar[,1]~host.sp.rar[,2],type = "l",
+     xlim = c(0,1), ylim = c(0,1),
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 1, lty = 2)
+par(new = TRUE)
+plot(host.sp.nonrand,
+     xlim = c(0,1), ylim = c(0,1),type = "l",
+     axes = TRUE, ylab = "Fraction of host species", xlab = "Fraction of host individuals",
+     lwd = 2, lty = 1)
+text(0, 0.95, "B")
+abline(v=0.5, lty=2, col=rgb(150,0,0,75,maxColorValue=255))
+#Interactions plot
+plot(int.rarefied, 
+     xlim = c(0,1), ylim = c(0,1), type = "l",
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 1, lty = 1)  
+par(new = TRUE)
+plot(int.group.rar[,1]~int.group.rar[,2],type = "l",
+     xlim = c(0,1), ylim = c(0,1),
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 1, lty = 2)
+par(new = TRUE)
+plot(int.nonrandom,
+     xlim = c(0,1), ylim = c(0,1),type = "l",
+     axes = TRUE, ylab = "Fraction of qualitative interactions", xlab = "Fraction of individual interactions",
+     lwd = 2, lty = 1)
+text(0, 0.95, "C", cex = 2)
+abline(v=0.5, lty=2, col=rgb(150,0,0,75,maxColorValue=255))
+plot.new()
+legend(0,0.95, c("Individual based rarefaction",
+                   "Random removal",
+                   "Nonrandom removal"),
+       lwd = c(1,1,2), lty = c(1,2,1))
 
 ###############################################
 ###############   One panel?
-#pdf("fig3.pdf", width=10,height=10/3)
+setwd("C:\\R\\how simple are tropical food webs\\clear codes")
+pdf("fig3.pdf", width=10,height=10/3)
 #windows(600,200)
 par(mfrow = c(1,3))
 plot(par.rarefied, 
@@ -321,65 +307,63 @@ legend(0.025,1, c("Random individuals",
                                   rgb(150,0,0,75,maxColorValue = 255),
                                   rgb(0,150,0,75,maxColorValue = 255)),
        pt.cex = 2, bty="n")
-#dev.off()
+dev.off()
+###################################################
+########## Truly one panel
 
-## GGPLOT2 plot
-library(ggplot2)
-Ordered <- rgb(150,0,0,75,maxColorValue = 255)
-Random <- rgb(0,150,0,75,maxColorValue = 255)
-
-# Parasite dataset
-parasites <- rbind(par.rarefied,
-                   par.sp.rar,
-                   par.sp.nonrand)
-colnames(parasites) <- c("Ind", "Spec")
-parasites$Type <- rep(c("Random parasitoid individuals",
-                        "Random parasitoid species",
-                        "Ordered parasitoid species"), c(dim(par.rarefied)[1],
-                                              dim(par.sp.rar)[1],
-                                              dim(par.sp.nonrand)[1]))
-parasites$Color <- rep(c("Random", "Random species", "Ordered"), c(dim(par.rarefied)[1],
-                                                     dim(par.sp.rar)[1],
-                                                     dim(par.sp.nonrand)[1]))
-
-# Hosts
-hosts <- rbind(host.rarefied,
-               host.sp.rar,
-               host.sp.nonrand)
-colnames(hosts) <- c("Ind", "Spec")
-hosts$Type <- rep(c("Random host individuals",
-                        "Random host species",
-                        "Ordered host species"), c(dim(host.rarefied)[1],
-                                              dim(host.sp.rar)[1],
-                                              dim(host.sp.nonrand)[1]))
-
-hosts$Color <- rep(c("Random", "Random species", "Ordered"), c(dim(host.rarefied)[1],
-                                                       dim(host.sp.rar)[1],
-                                                       dim(host.sp.nonrand)[1]))
-
-# Individuals
-interactions <- rbind(int.rarefied,
-                      int.group.rar,
-                      int.nonrandom)
-colnames(interactions) <- c("Ind", "Spec")
-interactions$Type <- rep(c("Random individuals",
-                    "Random interactions",
-                    "Ordered interactions"), c(dim(int.rarefied)[1],
-                                               dim(int.group.rar)[1],
-                                               dim(int.nonrandom)[1]))
-
-interactions$Color <- rep(c("Random", "Random species", "Ordered"), c(dim(int.rarefied)[1],
-                                                              dim(int.group.rar)[1],
-                                                              dim(int.nonrandom)[1]))
-
-
-dataset <- rbind(parasites, hosts, interactions)
-dataset$Plot <- rep(c("Parasitoids", "Hosts", "Interactions"), c(dim(parasites)[1],
-                                                                 dim(hosts)[1],
-                                                                 dim(interactions)[1]))
-
-p1 <- ggplot(dataset, aes(x=Ind, y=Spec, 
-                            group = Type, col = Color)) +
-  geom_point(shape=1, size=2, fill = Random) + facet_grid(. ~ Plot) 
-
-p1
+windows(150,150)
+par(mfrow = c(1,1))
+plot(par.rarefied, 
+     xlim = c(0,1), ylim = c(0,1), type = "l",
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 2, lty = 1)  
+par(new = TRUE)
+plot(par.sp.rar[,1]~par.sp.rar[,2],type = "l",
+     xlim = c(0,1), ylim = c(0,1),
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 2, lty = 1)
+par(new = TRUE)
+plot(par.sp.nonrand,
+     xlim = c(0,1), ylim = c(0,1),type = "l",
+     axes = TRUE, ylab = "Fraction of parasites species", xlab = "Fraction of parasites individuals",
+     lwd = 2, lty = 1)
+text(0, 0.95, "A")
+#HOSTS plot
+par(new = TRUE)
+plot(host.rarefied, 
+     xlim = c(0,1), ylim = c(0,1), type = "l",
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 2, lty = 2)  
+par(new = TRUE)
+plot(host.sp.rar[,1]~host.sp.rar[,2],type = "l",
+     xlim = c(0,1), ylim = c(0,1),
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 2, lty = 2)
+par(new = TRUE)
+plot(host.sp.nonrand,
+     xlim = c(0,1), ylim = c(0,1),type = "l",
+     axes = TRUE, ylab = "Fraction of host species", xlab = "Fraction of host individuals",
+     lwd = 2, lty = 2)
+text(0, 0.95, "B")
+#Interactions plot
+par(new = TRUE)
+plot(int.rarefied, 
+     xlim = c(0,1), ylim = c(0,1), type = "l",
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 2, lty = 3)  
+par(new = TRUE)
+plot(int.group.rar[,1]~int.group.rar[,2],type = "l",
+     xlim = c(0,1), ylim = c(0,1),
+     axes = FALSE, ylab = "", xlab = "",
+     lwd = 2, lty = 3)
+par(new = TRUE)
+plot(int.nonrandom,
+     xlim = c(0,1), ylim = c(0,1),type = "l",
+     axes = TRUE, ylab = "Fraction of qualitative interactions", xlab = "Fraction of individual interactions",
+     lwd = 2, lty = 3)
+text(0, 0.95, "C")
+plot.new()
+legend(0,0.95, c("Individual based rarefaction",
+                 "Random removal",
+                 "Nonrandom removal"),
+       lwd = c(1,1,2), lty = c(1,2,1))

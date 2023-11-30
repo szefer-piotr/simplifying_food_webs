@@ -76,6 +76,8 @@ rarefy.arthropods <- function(dataset, n = 100){
   return(result)
 }
 
+###### With indices...
+
 # Rarefying interactions
 rarefy.interactions <- function(dataset, n = 100){
   #This function reduces randomly the number of interactions from interaction matrix
@@ -129,7 +131,7 @@ reduce.interactions <- function(dataset, ...){
 
 # Function that nonrandomly reduces plants/arthropods specified as a margin of a matrix
 reduce <- function(dataset, margin, ...){
-  # This function takes data matrix ordered by rows and by columns and reduces
+  # This function takes data matrix ordered by rows and by columns and reuces
   # it by removing least abundant components from given margin and calculates
   # proportion of abundance left.
   ws.temp <- dataset
@@ -215,15 +217,12 @@ semi <- order.and.clear(semi)
 #semi.plantord <- reduce(semi, 2)
 #write.table(semi.plantord, "semi.plantord.txt")
 
-setwd("C:\\Users\\szefe\\Desktop\\Work\\extrapolation\\datasets")
-#setwd("C:\\R\\how simple are tropical food webs\\tritrophic data")
+setwd("C:\\R\\how simple are tropical food webs\\tritrophic data")
 equal <- read.csv("ufwEqual.csv", header = TRUE, sep = "\t")
 setwd("C:\\R\\how simple are tropical food webs")
 equal <- as.matrix(equal[, c(-1,-2)])
 equal[is.na(equal)] <- 0
 parasites <- order.and.clear(equal)
-
-dim(parasites)
 
 # PARASITE DATASET H2
 # Nonrandom Interactions
@@ -438,7 +437,7 @@ rarefy.arthropods <- function(dataset, n = 100){
 #####################################
 
 # PARASITES 
-setwd("C://Users//szefe//Desktop//Work//extrapolation//datasets//randomisation with H2")
+setwd("C://R//how simple are tropical food webs//randomisation with H2")
 par.parrandH2 <- read.table("par.hostrandH2.txt")  #abs
 par.parredH2 <- read.table("par.hostredH2.txt")   #abs
 par.hostrandH2 <- read.table("par.parrandH2.txt")  #abs
@@ -462,6 +461,7 @@ par.randhostV[,2] <- par.randhostV[,2]/par.randhostV[1,2]
 par.ordhostV<- read.table("par.ordhostV.txt")
 
 # DATA FOR GUILDS ARTHROPODS
+setwd("C://R//how simple are tropical food webs//randomisation with H2")
 miners.arthrorand <- read.table("miners.arthrorand.txt")
 mobile.arthrorand <- read.table("mobile.arthrorand.txt")
 semi.arthrorand <- read.table("semi.arthrorand.txt")
@@ -482,11 +482,13 @@ miners.plantrand[,2]<-miners.plantrand[,2]/miners.plantrand[1,2]
 mobile.plantrand[,2]<-mobile.plantrand[,2]/mobile.plantrand[1,2]
 semi.plantrand[,2]<-semi.plantrand[,2]/semi.plantrand[1,2]
 # read datatables V1 abundance, V2 species
+setwd("C://R//how simple are tropical food webs//randomisation with H2")
 miners.arthroord <- read.table("miners.arthroord.txt", header = T)
 mobile.arthroord <- read.table("mobile.arthroord.txt", header = T)
 semi.arthroord <- read.table("semi.arthroord.txt", header = T)
 miners.arthrorand <- read.table("miners.arthrorand.txt", header = T)
 # INTERACTIONS
+setwd("C://R//how simple are tropical food webs//randomisation with H2")
 miners.intrand <- read.table("miners.rand.txt", header = T)
 mobile.intrand <- read.table("mobile.rand.txt", header = T)
 semi.intrand <- read.table("semi.rand.txt", header = T)
@@ -498,18 +500,14 @@ miners.intrand[1,3] <- miners.intrand[1,2]
 miners.intrand[1,2] <- sum(miners)
 miners.intrand[,2] <- miners.intrand[,2]/miners.intrand[1,2]
 mobile.intrand[,2] <- mobile.intrand[,2]/mobile.intrand[1,2]
-
 head(mobile.intrand)
 head(miners.intrand)
 head(semi.intrand)
-
 # V1-abundance, V2-no of interactions,
 miners.intord <- read.table("miners.redint.txt", header = T)
 mobile.intord <- read.table("mobile.redint.txt", header = T)
 semi.intord <- read.table("semi.redint.txt", header = T)
-
 ######## VULNERABILITY AND GENERALITY DATASETS ######
-
 setwd("C:/R/how simple are tropical food webs/randomisation with H2")
 miners.artrandV <- read.table("miners.artrandV.txt") #swiched C4-gen,C3-vul
 mobile.artrandV <- read.table("mobile.artrandV.txt")
@@ -531,7 +529,6 @@ mobile.intrandV <- read.table("mobile.intrandV.txt")
 semi.intrandV <- read.table("semi.intrandV.txt")
 
 setwd("C:\\R\\how simple are tropical food webs\\simplification results")
-
 # Reading the resuts
 semi.row <- read.table("semi.row.txt")
 mobi.row <- read.table("mobi.row.txt")
@@ -548,7 +545,6 @@ para.col <- read.table("para.col.txt")
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # PLOTS PLOTS PLOTS
 # Czy to jest dobrze???
-
 pdf("parasites.pdf")
 #windows(1600,1600)
 par(mfrow=c(3,3),mar=c(3,3,3,3), cex.axis=0.6,cex.lab=0.6,cex.main=0.7,cex=1,

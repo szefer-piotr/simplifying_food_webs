@@ -1,4 +1,4 @@
-setwd("C:\\Users\\Piotr Szefer\\Desktop\\Work\\extrapolation\\datasets")
+setwd("C:\\R\\how simple are tropical food webs\\tritrophic data")
 
 order.and.clear <- function(dataset){
   #This function order the dataset based on rows and columns
@@ -11,6 +11,7 @@ order.and.clear <- function(dataset){
 }
 
 equal <- read.csv("ufwEqual.csv", header = TRUE, sep = "\t")
+setwd("C:\\R\\how simple are tropical food webs")
 equal <- as.matrix(equal[, c(-1,-2)])
 equal[is.na(equal)] <- 0
 
@@ -23,7 +24,7 @@ library(bipartite)
 
 # Colour the parasites that account for 50%
 red <- "grey80"
-#red <- rgb(150,0,0,150,maxColorValue=255) 
+red <- rgb(150,0,0,150,maxColorValue=255) 
 blu <- rgb(0,0,150,255,maxColorValue=255)
 rownames(equal) <- seq(1:dim(equal)[1])
 colnames(equal) <- seq(1:dim(equal)[2])
@@ -126,8 +127,8 @@ int.col3[interaction.col3] <- blu
 ls <- 0.005
 hs <- (0.0015*ls)/0.0023
 
-#windows(4000,2000)
-#pdf("fig2.pdf", height=7, width=7)
+windows(4000,2000)
+pdf("fig2.pdf", height=7, width=7)
 par(mfrow=c(2,1), mar=c(2,2,2,2))
 plotweb(equal, method="cca",
         y.width.low=0.1,y.width.high=0.1,
@@ -168,10 +169,10 @@ plotweb(equal, method="cca",
         bor.col.interaction=int.col2
 )
 text(0.1,1.7,"B", cex = 1.5)
-#dev.off()
+dev.off()
 
-#pdf("figS1.pdf", height=7, width=7)
-par(mfrow=c(1,1), mar=c(10,5,10,5))
+pdf("figS1.pdf", height=7, width=7)
+par(mfrow=c(2,1), mar=c(2,2,2,2))
 
 # Interactions
 plotweb(equal, method="normal",
@@ -192,4 +193,4 @@ plotweb(equal, method="normal",
         col.interaction=int.col3 ,
         bor.col.interaction=int.col3 
 )
-#dev.off()
+dev.off()

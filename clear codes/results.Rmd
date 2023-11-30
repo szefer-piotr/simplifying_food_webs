@@ -1,0 +1,317 @@
+---
+title: "Dominant species of insects in tropical rainforest food webs - results"
+author: Vojtech Novotny, Piotr Szefer,Yves Basset, Tom Fayle, Jan Hrcek, Scott E.
+  Miller, George D. Weiblen
+date: "February 1, 2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, fig.width=15, fig.height = 10)
+knitr::opts_knit$set(root.dir = "C:\\Users\\szefe\\Desktop\\Work\\extrapolation\\datasets")
+```
+
+## Visualising the bipartite caterpillar-parasitoid food web simplifications
+
+
+I have used the ufwEqual.csv file. It has 246 rows (herbivore species), and 121 columns (parasite species). When I removed empty rows (caterpillar species for which no parasites were found) the dimentionality was reduced to 76 x 121. 956 parasites. and 8479 caterpillars. Plots are using 76x121 matrix.
+
+```{r, include=FALSE, echo=FALSE}
+setwd("C:\\Users\\szefe\\Desktop\\Work\\extrapolation\\datasets")
+
+order.and.clear <- function(dataset){
+  #This function order the dataset based on rows and columns
+  #and removes zero rows and columns. Dataset should not contain any NAs!
+  dataset <- dataset[rowSums(dataset)>0,]
+  dataset <- dataset[, colSums(dataset)>0]
+  dataset <- dataset[order(rowSums(dataset), decreasing = TRUE), ]
+  dataset <- dataset[,order(colSums(dataset), decreasing = TRUE)]
+  return(dataset)
+}
+
+equal <- read.csv("ufwEqual.csv", header = TRUE, sep = "\t")
+equal <- as.matrix(equal[, c(-1,-2)])
+equal[is.na(equal)] <- 0
+
+#getting rid of the empty columns and rows from equal dataset
+dim(equal)
+equal <- equal[rowSums(equal)>0, ]
+equal <- equal[, colSums(equal)>0]
+
+library(bipartite)
+
+# Colour the parasites that account for 50%
+red <- "grey80"
+#red <- rgb(150,0,0,150,maxColorValue=255) 
+blu <- rgb(0,0,150,255,maxColorValue=255)
+rownames(equal) <- seq(1:dim(equal)[1])
+colnames(equal) <- seq(1:dim(equal)[2])
+
+###### Colours for parasites
+equal.ord <- order.and.clear(equal) #order and remove empty rows to easily find the 50%
+tot.abu <- sum(equal) # total abundance
+subset <- equal.ord[ ,cumsum(colSums(equal.ord))<(tot.abu/2)] #subset of data whith only 50
+subset <- subset[rowSums(subset)>0,] # only connected rows left
+upper.level.to.colour1 <- as.numeric(colnames(subset)) # which upper sp to colour
+lower.level.to.colour1 <- as.numeric(rownames(subset)) # which lower lev to colour
+
+row.indices <- as.vector(which(subset>0, arr.ind = TRUE)[,1])
+col.indices <- as.vector(which(subset>0, arr.ind = TRUE)[,2])
+row.for.int <- as.numeric(rownames(subset)[row.indices])
+col.for.int <- as.numeric(colnames(subset)[col.indices])
+interaction.col1 <- ((row.for.int - 1)*dim(equal)[2])+col.for.int
+
+############################################################################
+
+# Colours for arhropods 
+subset1 <- equal.ord[cumsum(rowSums(equal.ord))<(tot.abu/2), ]
+subset1 <- subset1[,colSums(subset1)>0]
+upper.level.to.colour2 <- as.numeric(colnames(subset1))
+lower.level.to.colour2 <- as.numeric(rownames(subset1))
+
+row.indices <- as.vector(which(subset1>0, arr.ind = TRUE)[,1])
+col.indices <- as.vector(which(subset1>0, arr.ind = TRUE)[,2])
+row.for.int <- as.numeric(rownames(subset1)[row.indices])
+col.for.int <- as.numeric(colnames(subset1)[col.indices])
+interaction.col2 <- ((row.for.int - 1)*dim(equal)[2])+col.for.int
+
+#########################################
+####### Colours for interactions ########
+
+interactions <- sort(equal.ord[equal.ord>0], decreasing = T)
+inter.50pc <- interactions[cumsum(interactions)<(tot.abu/2)]
+
+intR <- vector('numeric', length=length(inter.50pc))
+intC <- vector('numeric', length=length(inter.50pc))
+
+for (int in 1:length(inter.50pc)){
+  #print(int)
+  indices <- which(equal==inter.50pc[int], arr.ind=T)
+  #print(indices)
+  intR[int] <- indices[1,1]
+  intC[int] <- indices[1,2]
+}
+
+#intR
+#intC
+
+intC[9] <- 119
+intR[9] <- 28
+intC[13]<- 77
+intR[13]<- 66
+intC[15]<- 91
+intR[15]<- 61
+
+
+subset.int <- equal[intR, intC]
+upper.level.to.colour3 <- as.numeric(colnames(subset.int))
+lower.level.to.colour3 <- as.numeric(rownames(subset.int))
+
+row.indices <- as.vector(which(subset.int>0, arr.ind = TRUE)[,1])
+col.indices <- as.vector(which(subset.int>0, arr.ind = TRUE)[,2])
+row.for.int <- as.numeric(rownames(subset.int)[row.indices])
+col.for.int <- as.numeric(colnames(subset.int)[col.indices])
+interaction.col3 <- ((row.for.int - 1)*dim(equal)[2])+col.for.int
+
+####### END OF INTERACTIONS ######
+
+
+###### setting up colours
+up.colour1 <- rep(red, dim(equal)[2])
+up.colour1[upper.level.to.colour1] <- blu
+lo.colour1 <- rep(red, dim(equal)[1])
+lo.colour1[lower.level.to.colour1] <- blu
+int.col1 <- rep(NULL, dim(equal)[1]*dim(equal)[2]) #substitute NULL with red
+int.col1[interaction.col1] <- blu
+
+
+up.colour2 <- rep(red, dim(equal)[2])
+up.colour2[upper.level.to.colour2] <- blu
+lo.colour2 <- rep(red, dim(equal)[1])
+lo.colour2[lower.level.to.colour2] <- blu
+int.col2 <- rep(NULL, dim(equal)[1]*dim(equal)[2]) # substitiute NUll with red
+int.col2[interaction.col2] <- blu
+
+
+up.colour3 <- rep(red, dim(equal)[2])
+up.colour3[upper.level.to.colour3] <- blu
+lo.colour3 <- rep(red, dim(equal)[1])
+lo.colour3[lower.level.to.colour3] <- blu
+int.col3 <- rep(NULL, dim(equal)[1]*dim(equal)[2])
+int.col3[interaction.col3] <- blu
+
+
+ls <- 0.005
+hs <- (0.0015*ls)/0.0023
+
+```
+
+```{r, echo = FALSE, fig.width=15, fig.height = 10}
+par(mfrow=c(2,1), mar=c(2,2,2,2))
+plotweb(equal, method="cca",
+        y.width.low=0.1,y.width.high=0.1,
+        high.lablength=0,low.lablength=0,
+        
+        arrow = "down", empty=F,
+        
+        low.spacing = ls, high.spacing = hs,
+        
+        col.high = up.colour1,
+        bor.col.high = up.colour1,
+        
+        col.low = lo.colour1,
+        bor.col.low = lo.colour1,
+        
+        col.interaction=int.col1,
+        bor.col.interaction=int.col1,
+        
+        plot.axes = F
+          )
+text(0.1,1.7,"A", cex = 1.5)
+
+plotweb(equal, method="cca",
+        y.width.low=0.1,y.width.high=0.1,
+        high.lablength=0,low.lablength=0,
+        
+        arrow = "up", empty=F,
+        
+        low.spacing = ls, high.spacing = hs,
+        
+        col.high = up.colour2,
+        bor.col.high = up.colour2,
+        
+        col.low = lo.colour2,
+        bor.col.low = lo.colour2,
+        
+        col.interaction=int.col2,
+        bor.col.interaction=int.col2
+)
+text(0.1,1.7,"B", cex = 1.5)
+```
+
+Fig. 2. A: Bipartite caterpillar-parasitoid food web from a lowland rainforest in New Guinea, comprising 4803 caterpillars from 154 species (mostly xxx) attacked by 643 parasitoids from 76 species (mostly Braconidae, Tachinidae and Ichneumonidae), forming xxx distinct trophic interactions (Hrcek et al. 2013). Simplified web comprising 50% of parasitoid individuals following ordered removal of parasitoid species highlighted in blue. B a sub-web retaining 50% of host individuals. Only interaction in which half most abundant species were involved is shown. When only 50% abundance of caterpillars or parasitoids were considered, then the number of interactions/species is reduced to xx 
+
+```{r, echo=FALSE, fig.width=15, fig.height = 5}
+par(mfrow=c(1,1), mar=c(2,2,2,2))
+
+plotweb(equal, method="normal",
+        y.width.low=0.1,y.width.high=0.1,
+        high.lablength=0,low.lablength=0,
+        
+        arrow = "down", 
+        empty=T,
+        
+        low.spacing = ls, high.spacing = hs,
+        
+        col.high = up.colour3,
+        bor.col.high = up.colour3,
+        
+        col.low = lo.colour3,
+        bor.col.low = lo.colour3,
+        
+        col.interaction=int.col3 ,
+        bor.col.interaction=int.col3 
+)
+```
+
+Fig. S1. Supplementary graph showing topology of the network when 50% of interactions are preserved
+
+```{r, echo=FALSE, include=FALSE}
+#First read the randomisation results from the file (results obtained using fig3.R script)
+library(ggplot2)
+setwd("C:\\Users\\szefe\\Desktop\\Work\\extrapolation\\datasets")
+par.rarefied   <- read.table("par.rarefied.txt")
+par.sp.rar     <- read.table("par.sp.rar.txt")
+par.sp.nonrand <- read.table("par.sp.nonrand.txt")
+
+host.rarefied  <- read.table("host.rarefied.txt")
+host.sp.rar    <- read.table("host.sp.rar.txt")
+host.sp.nonrand<- read.table("host.sp.nonrand.txt")
+
+int.rarefied   <- read.table("int.rarefied.txt")
+int.group.rar  <- read.table("int.group.rar.txt")
+int.nonrandom  <- read.table("int.nonrandom.txt")
+
+Ordered <- rgb(150,0,0,75,maxColorValue = 255)
+Random <- rgb(0,150,0,75,maxColorValue = 255)
+
+# Parasite dataset
+parasites <- rbind(par.rarefied,
+                   par.sp.rar,
+                   par.sp.nonrand)
+colnames(parasites) <- c("Ind", "Spec")
+parasites$Type <- rep(c("Random parasitoid individuals",
+                        "Random parasitoid species",
+                        "Ordered parasitoid species"), c(dim(par.rarefied)[1],
+                                              dim(par.sp.rar)[1],
+                                              dim(par.sp.nonrand)[1]))
+parasites$Color <- rep(c("Random", "Random species", "Ordered"), c(dim(par.rarefied)[1],
+                                                     dim(par.sp.rar)[1],
+                                                     dim(par.sp.nonrand)[1]))
+
+# Hosts
+hosts <- rbind(host.rarefied,
+               host.sp.rar,
+               host.sp.nonrand)
+colnames(hosts) <- c("Ind", "Spec")
+hosts$Type <- rep(c("Random host individuals",
+                        "Random host species",
+                        "Ordered host species"), c(dim(host.rarefied)[1],
+                                              dim(host.sp.rar)[1],
+                                              dim(host.sp.nonrand)[1]))
+
+hosts$Color <- rep(c("Random", "Random species", "Ordered"), c(dim(host.rarefied)[1],
+                                                       dim(host.sp.rar)[1],
+                                                       dim(host.sp.nonrand)[1]))
+
+# Individuals
+interactions <- rbind(int.rarefied,
+                      int.group.rar,
+                      int.nonrandom)
+colnames(interactions) <- c("Ind", "Spec")
+interactions$Type <- rep(c("Random individuals",
+                    "Random interactions",
+                    "Ordered interactions"), c(dim(int.rarefied)[1],
+                                               dim(int.group.rar)[1],
+                                               dim(int.nonrandom)[1]))
+
+interactions$Color <- rep(c("Random", "Random species", "Ordered"), c(dim(int.rarefied)[1],
+                                                              dim(int.group.rar)[1],
+                                                              dim(int.nonrandom)[1]))
+
+
+dataset <- rbind(parasites, hosts, interactions)
+dataset$Plot <- rep(c("Parasitoids", "Hosts", "Interactions"), c(dim(parasites)[1],
+                                                                 dim(hosts)[1],
+                                                                 dim(interactions)[1]))
+
+```
+
+## Simplification of host-parasites food web
+
+```{r, echo=FALSE, fig.width=15, fig.height = 5}
+p1 <- ggplot(dataset, aes(x=Ind, y=Spec, 
+                            group = Type, col = Color)) +
+  geom_point(shape=1, size = 2) + facet_grid(. ~ Plot) 
+
+p1
+```
+
+Fig. 3. The proportion of parasitoid species (A), host species (B) and host - parasitoid trophic interactions (C) retained in the food web as a function of three simplification strategies: random removal of individuals (equal to rarefaction), random removal of species, and ordered removal of species from the most to the least common species. Note that individual parasitoids and parasitoid species were removed in the analysis of trophic interactions (C) since each parasitoid is involved in exactly one trophic interaction.
+
+## Simplification of plant-herbivore food web
+
+```{r}
+guildData <- read.table("guildData.txt")
+
+p_guild <- ggplot(guildData, aes(x=Arthropods, 
+                           y=Plants , 
+                          group = Type, col = Guild)) +
+  geom_point(shape=1, size = 2) + facet_wrap(~ Type, ncol=2, scales = "free")
+
+p_guild
+```
+
+Fig. 4. The proportion of herbivore species from three guilds (miners, semi-concealed chewers and mobile chewers) retained in plant-herbivore food web as a function of the retained number of herbivore individuals as a result of various web simplification strategies: A – random removal of herbivore individuals (rarefaction); B – random removal of herbivore species; C - random removal of plant species; D – ordered removal of plant species; E - random removal of plant-herbivore trophic interactions; F – ordered removal of plant-herbivore trophic interactions.
+
+Fig. 5. 

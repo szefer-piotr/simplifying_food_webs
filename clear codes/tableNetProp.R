@@ -1,7 +1,7 @@
 
 # Guilds data
 require(bipartite)
-setwd("C:\\Users\\Piotr Szefer\\Desktop\\Work\\extrapolation\\datasets")
+setwd("C:\\R\\how simple are tropical food webs")
 guilds <- read.table("guilds.csv", header = TRUE, sep = "\t")
 guilds[is.na(guilds)] <- 0
 guilds.val <- guilds[,2:39] #Plants are in columns and arthropods are in rows
@@ -21,7 +21,9 @@ mes <- t(mes)
 exp <- t(exp)
 
 # Parasites dataset
+setwd("C:\\R\\how simple are tropical food webs\\tritrophic data")
 equal <- read.csv("ufwEqual.csv", header = TRUE, sep = "\t")
+setwd("C:\\R\\how simple are tropical food webs")
 equal <- as.matrix(equal[, c(-1,-2)])
 equal[is.na(equal)] <- 0
 
@@ -31,6 +33,7 @@ sum(rowSums(par) == 0)
 
 
 # IBISCA temporal
+setwd("C:\\R\\how simple are tropical food webs\\50perc\\IBISCA accumulation")
 tfl <- read.csv("flatidae.csv", header = TRUE, sep = "\t")
 tar <- read.csv("arctiidae.csv", header = TRUE, sep = "\t")
 tge <- read.csv("geometridae.csv", header = TRUE, sep = "\t")
@@ -47,6 +50,8 @@ tfl <- tfl[,-c(1,2,3,4)]
 tar <- tar[,-c(1,2,3,4)]
 
 # Spatial
+setwd("C:/R/how simple are tropical food webs/50perc/")
+
 read.table("BER.csv",header=T, sep = ",") -> ber
 read.table("COP.csv",header=T, sep = ",") -> cop
 read.table("MAA.csv",header=T, sep = ",") -> maa
@@ -66,7 +71,7 @@ datasets <- list(min,mob,sem,mes,exp,
 
 
 # Standard stuff with calcChar
-setwd("C:\\Users\\Piotr Szefer\\Desktop\\Work\\extrapolation\\clear codes")
+setwd("C:\\R\\how simple are tropical food webs")
 source("funct_simplifyV2.R")
 
 indMat <- matrix(0,nrow=length(datasets), ncol=10)
@@ -92,10 +97,8 @@ for (i in 1:length(datasets)){
 
 indMat3 <- cbind(indMat2, robRes)
 colnames(indMat3) <- c("Abu","Row","Col","Int","H2","Gen","Vul","50r","50c","50I","NODF", "Robust")
-
-library(knitr)
-
-#write.table(indMat3, "indMat.txt")
+getwd()
+write.table(indMat3, "indMat.txt")
 
 # Order and clear function
 
@@ -151,4 +154,21 @@ for ( i in 1:4){
 
 colnames(tab) <- names(calcChar(miners))
 rownames(tab) <- c("Miners","Mobile", "Semi","Prasitoids")
-#write.table(tab,"network properties.txt")
+write.table(tab,"network properties.txt")
+
+
+dim(mobi.row)
+dim(mobi.col)
+
+
+# Scale free network?
+
+rs <- rowSums(par)
+cs <- colSums(par)
+dd <- c(rs,cs)
+hdd <- hist(dd, breaks=50)
+plot(log(1:length(hdd$counts)), log(hdd$counts+1))
+lm1 <- lm(log(hdd$counts+1)~log(1:length(hdd$counts)))
+abline(lm1)
+
+summary(lm1)
