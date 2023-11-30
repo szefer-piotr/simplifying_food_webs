@@ -1,0 +1,5 @@
+Network	Abu	Rows	Cols	Int	H2	Generality	Vulnerability	Species making 	50c	50rI
+Miners	9624	34	69	91	0.95	1.39	1.92	9	10	13
+Mobile	19272	38	221	1143	0.36	14.86	12.27	12	5	78
+Semi	12866	38	122	382	0.79	3.15	4.13	9	9	16
+Prasitoids	956	76	121	186	0.86	1.57	2.70	8	12	15
